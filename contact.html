@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - Red Square Infosys | Digital Innovation Architects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Open+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    :root {
+      --primary: #D2691E; /* Burnt Orange Elegance */
+      --secondary: #E59866; /* Lighter Burnt Orange */
+      --background: #FFFFFF; /* Pure White Canvas */
+      --text-dark: #333333; /* Deep Charcoal */
+      --text-light: #666666; /* Medium Gray */
+      --text-lighter: #999999; /* Light Gray */
+      --accent: #C04040; /* Crimson Red Accent */
+      --paper: #FDF5E6; /* Warm Beige Paper */
+      --shadow-light: rgba(210, 105, 30, 0.08);
+      --shadow-medium: rgba(210, 105, 30, 0.15);
+      --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+      --gradient-hero: linear-gradient(135deg, var(--accent), var(--accent));
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--background);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+    
+    /* SOPHISTICATED CURSOR */
+    .advanced-cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transition: transform 0.2s ease, opacity 0.3s ease;
+      box-shadow: 0 0 15px rgba(210, 105, 30, 0.6);
+    }
+    
+    /* ARTISTIC NAVIGATION */
+    .floating-navbar {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9998;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 165, 0, 0.12);
+      border-radius: 40px;
+      padding: 0.4rem 0.7rem;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+      display: flex;
+      gap: 0.15rem;
+      opacity: 0;
+      animation: navbarSlideUp 0.8s ease-out 1.5s forwards;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      max-height: 50px;
+      overflow: hidden;
+      width: 410px;
+    }
+
+    @keyframes navbarSlideUp {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(80px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+    
+    .floating-navbar.expanded {
+      max-height: 450px;
+      transform: translateX(-50%) translateY(-3px);
+      box-shadow: 0 8px 30px rgba(255, 165, 0, 0.15);
+      flex-direction: column-reverse;
+      padding: 1.2rem;
+      border-radius: 18px;
+      width: 380px;
+      align-items: center;
+    }
+    
+    .nav-items-container {
+      display: flex;
+      gap: 0.3rem;
+    }
+    
+    .nav-item {
+      position: relative;
+      padding: 0.4rem 0.9rem;
+      background: transparent;
+      border: none;
+      border-radius: 20px;
+      color: var(--text-light);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      letter-spacing: 0.3px;
+    }
+    
+    .nav-item:hover {
+      color: var(--primary);
+      background: rgba(255, 165, 0, 0.08);
+    }
+    
+    .nav-item.active {
+      color: white;
+      background: var(--accent);
+      box-shadow: 0 3px 10px rgba(255, 126, 126, 0.25);
+    }
+    
+    /* PRODUCTS DROPDOWN */
+    .products-dropdown {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      width: 340px;
+      margin-bottom: 0.8rem;
+    }
+    
+    .floating-navbar.expanded .products-dropdown {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .dropdown-header {
+      text-align: center;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(255, 165, 0, 0.1);
+    }
+    
+    .dropdown-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 0.3rem;
+    }
+    
+    .dropdown-subtitle {
+      font-size: 0.65rem;
+      color: var(--text-light);
+      letter-spacing: 0.2px;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .product-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.6rem;
+      background: rgba(255, 165, 0, 0.03);
+      border: 1px solid rgba(255, 165, 0, 0.08);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .product-item:hover {
+      background: rgba(255, 165, 0, 0.08);
+      border-color: rgba(255, 165, 0, 0.15);
+      transform: translateY(-1px);
+    }
+    
+    .product-icon-small {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    
+    .product-name-small {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 0.1rem;
+      line-height: 1.2;
+    }
+    
+    .product-desc-small {
+      font-size: 0.55rem;
+      color: var(--text-light);
+      line-height: 1.3;
+    }
+    
+    .view-all-products {
+      display: inline-block;
+      padding: 0.5rem 1.2rem;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 18px;
+      font-size: 0.65rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    /* CONTACT HERO SECTION */
+    .contact-hero {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 1.5rem 6rem;
+      background: var(--gradient-hero);
+      overflow: hidden;
+    }
+    
+    .contact-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 50px 50px, 80px 80px;
+      animation: heroPattern 20s linear infinite;
+    }
+    
+    @keyframes heroPattern {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(50px) translateY(50px); }
+    }
+    
+    .contact-hero-container {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .contact-hero-brand {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      position: relative;
+    }
+    
+    .contact-hero-brand::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    }
+    
+    .contact-hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: #FFFFFF;
+      margin-bottom: 2rem;
+      opacity: 0;
+      letter-spacing: -0.02em;
+      transform: translateY(30px);
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    .contact-hero-title .gradient-text {
+      background: linear-gradient(135deg, #FFD700, #FFA500, #FF6347);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    
+    .contact-hero-subtitle {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-weight: 300;
+      color: rgba(255,255,255,0.9);
+      max-width: 700px;
+      margin: 0 auto 3rem auto;
+      opacity: 0;
+      line-height: 1.8;
+      transform: translateY(20px);
+    }
+    
+    /* INTERACTIVE CONTACT FORM */
+    .contact-form-section {
+      position: relative;
+      padding: 6rem 1.5rem;
+      background: var(--background);
+      overflow: hidden;
+    }
+    
+    .contact-form-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    
+    .contact-form-visual {
+      position: relative;
+      height: 500px;
+      background: var(--gradient-primary);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.8;
+      transform: scale(0.9) rotate(-2deg);
+      transition: all 0.4s ease;
+      box-shadow: 0 20px 60px var(--shadow-medium);
+      overflow: hidden;
+    }
+    
+    .contact-form-visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+      border-radius: 20px;
+    }
+    
+    .contact-form-visual:hover {
+      transform: scale(0.95) rotate(0deg);
+      opacity: 1;
+      box-shadow: 0 25px 80px var(--shadow-medium);
+    }
+    
+    .contact-form-content {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    
+    .contact-form-tagline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--primary);
+      letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      position: relative;
+    }
+    
+    .contact-form-tagline::before {
+      content: '';
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .contact-form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 2rem;
+    }
+    
+    .contact-form-title .gradient-text {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .contact-form {
+      display: grid;
+      gap: 1.5rem;
+    }
+    
+    .form-group {
+      position: relative;
+    }
+    
+    .form-label {
+      position: absolute;
+      left: 1.5rem;
+      top: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      transition: all 0.3s ease;
+      pointer-events: none;
+      background: var(--background);
+      padding: 0 0.5rem;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 1.5rem;
+      border: 1px solid var(--shadow-light);
+      border-radius: 12px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--text-dark);
+      transition: all 0.3s ease;
+      background: var(--background);
+    }
+    
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--shadow-light);
+      outline: none;
+    }
+    
+    .form-input:focus + .form-label,
+    .form-input:not(:placeholder-shown) + .form-label {
+      top: -0.6rem;
+      left: 1rem;
+      font-size: 0.7rem;
+      color: var(--primary);
+    }
+    
+    .form-textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .form-submit {
+      display: inline-block;
+      padding: 1.2rem 2.5rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    
+    .form-submit::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .form-submit:hover::before {
+      left: 100%;
+    }
+    
+    .form-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+    }
+    
+    /* CONTACT CARDS SECTION */
+    .contact-cards-section {
+      position: relative;
+      padding: 6rem 1.5rem;
+      background: var(--paper);
+    }
+    
+    .contact-cards-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .contact-cards-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    
+    .contact-cards-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+    
+    .contact-cards-subtitle {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    
+    .contact-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+    }
+    
+    .contact-card {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      opacity: 0;
+      transform: translateY(40px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--shadow-light);
+    }
+    
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--shadow-light), transparent);
+      transition: left 0.4s ease;
+    }
+    
+    .contact-card:hover::before {
+      left: 0;
+    }
+    
+    .contact-card:hover {
+      transform: translateY(-10px) !important;
+      border-color: var(--shadow-medium);
+      box-shadow: 0 20px 60px rgba(210, 105, 30, 0.15);
+    }
+    
+    .contact-card-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      font-size: 2rem;
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .contact-card:hover .contact-card-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+    
+    .contact-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+    
+    .contact-card-info {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    
+    .contact-card-link {
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .contact-card-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(192, 64, 64, 0.3);
+    }
+    
+    /* INTERACTIVE MAP SECTION */
+    .map-section {
+      position: relative;
+      height: 500px;
+      background: var(--paper);
+      overflow: hidden;
+    }
+    
+    .map-container {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient-primary);
+      opacity: 0.8;
+    }
+    
+    .map-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    }
+    
+    .map-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      padding: 2rem;
+      max-width: 600px;
+    }
+    
+    .map-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 500;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    .map-address {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .map-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: white;
+      color: var(--accent);
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+    
+    .map-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+    }
+    
+    /* FAQ SECTION */
+    .faq-section {
+      position: relative;
+      padding: 6rem 1.5rem;
+      background: var(--background);
+    }
+    
+    .faq-container {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .faq-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    
+    .faq-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+    
+    .faq-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    
+    .faq-accordion {
+      position: relative;
+    }
+    
+    .faq-item {
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--shadow-light);
+      border-radius: 12px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .faq-question:hover {
+      color: var(--primary);
+    }
+    
+    .faq-icon {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+    }
+    
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      padding: 0 1.5rem;
+    }
+    
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding: 0 1.5rem 1.5rem;
+    }
+    
+    .faq-answer-content {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+    
+    /* RESPONSIVE DESIGN ENHANCEMENTS */
+    @media (max-width: 1024px) {
+      .contact-form-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+      
+      .contact-form-visual {
+        height: 350px;
+        order: -1;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .floating-navbar {
+        bottom: 1rem;
+        padding: 0.4rem 0.8rem;
+        left: 1rem;
+        right: 1rem;
+        width: auto;
+        transform: none;
+      }
+      
+      .floating-navbar.expanded {
+        width: auto;
+        left: 1rem;
+        right: 1rem;
+      }
+      
+      .nav-item {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+      }
+      
+      .contact-hero {
+        min-height: 55vh;
+        padding: 6rem 1rem 4rem;
+      }
+      
+      .contact-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .contact-form-visual {
+        height: 280px;
+      }
+      
+      .form-input {
+        padding: 1.2rem;
+      }
+      
+      .form-label {
+        left: 1.2rem;
+      }
+      
+      .form-input:focus + .form-label,
+      .form-input:not(:placeholder-shown) + .form-label {
+        left: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="advanced-cursor"></div>
+  
+  <nav class="floating-navbar" id="floatingNav">
+    <div class="nav-items-container">
+      <a href="index.html" class="nav-item" data-section="home">
+        <span>Home</span>
+      </a>
+      <a href="about.html" class="nav-item" data-section="about">
+        <span>About</span>
+      </a>
+      <div class="nav-item products-nav" data-section="products">
+        <span>Products</span>
+      </div>
+      <a href="index.html#process" class="nav-item" data-section="process">
+        <span>Process</span>
+      </a>
+      <a href="contact.html" class="nav-item active" data-section="contact">
+        <span>Contact Us</span>
+      </a>
+    </div>
+    
+    <div class="products-dropdown">
+      <div class="dropdown-header">
+        <h3 class="dropdown-title">Our Product Suite</h3>
+        <p class="dropdown-subtitle">Cutting-edge solutions for modern businesses</p>
+      </div>
+      <div class="products-grid">
+        <a href="tally.html" class="product-item" data-product="tally">
+          <div class="product-icon-small">📊</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Tally Excellence</h4>
+            <p class="product-desc-small">Advanced accounting & analytics</p>
+          </div>
+        </a>
+        <a href="sap.html" class="product-item" data-product="sap">
+          <div class="product-icon-small">🏢</div>
+          <div class="product-info">
+            <h4 class="product-name-small">SAP Integration</h4>
+            <p class="product-desc-small">Enterprise resource planning</p>
+          </div>
+        </a>
+        <a href="hr.html" class="product-item" data-product="hr">
+          <div class="product-icon-small">👥</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Greyt HR Suite</h4>
+            <p class="product-desc-small">Intelligent workforce management</p>
+          </div>
+        </a>
+        <a href="erp.html" class="product-item" data-product="erp">
+          <div class="product-icon-small">⚡</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Logic ERP Pro</h4>
+            <p class="product-desc-small">ML-powered business intelligence</p>
+          </div>
+        </a>
+        <a href="cloud-solutions.html" class="product-item" data-product="cloud">
+          <div class="product-icon-small">☁️</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Cloud Ecosystem</h4>
+            <p class="product-desc-small">Multi-cloud infrastructure</p>
+          </div>
+        </a>
+        <a href="cyber.html" class="product-item" data-product="security">
+          <div class="product-icon-small">🛡️</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Cyber Defense</h4>
+            <p class="product-desc-small">AI-driven threat protection</p>
+          </div>
+        </a>
+        <a href="IT.html" class="product-item" data-product="it">
+          <div class="product-icon-small">🔧</div>
+          <div class="product-info">
+            <h4 class="product-name-small">IT Infrastructure</h4>
+            <p class="product-desc-small">Robust and scalable IT solutions</p>
+          </div>
+        </a>
+        <a href="web.html" class="product-item" data-product="web">
+          <div class="product-icon-small">📱</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Mobile/Web App Development</h4>
+            <p class="product-desc-small">Custom applications for all platforms</p>
+          </div>
+        </a>
+      </div>
+      <div class="dropdown-footer">
+        <a href="index.html#products" class="view-all-products">View All Products</a>
+      </div>
+    </div>
+  </nav>
+  
+  <section class="contact-hero">
+    <div class="contact-hero-container">
+      <div class="contact-hero-brand">Red Square Infosys</div>
+      <h1 class="contact-hero-title">
+        Let's <span class="gradient-text">Connect</span>
+      </h1>
+      <p class="contact-hero-subtitle">
+        Ready to start your digital transformation journey? Reach out to our team of experts 
+        who are eager to help you solve complex challenges with innovative solutions.
+      </p>
+    </div>
+  </section>
+  
+  <section class="contact-form-section">
+    <div class="contact-form-container">
+      <div class="contact-form-content">
+        <div class="contact-form-tagline">Get In Touch</div>
+        <h2 class="contact-form-title">
+          Send Us a <span class="gradient-text">Message</span>
+        </h2>
+        
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <input type="text" class="form-input" id="name" placeholder=" " required>
+            <label for="name" class="form-label">Your Name</label>
+          </div>
+          
+          <div class="form-group">
+            <input type="email" class="form-input" id="email" placeholder=" " required>
+            <label for="email" class="form-label">Email Address</label>
+          </div>
+          
+          <div class="form-group">
+            <input type="text" class="form-input" id="subject" placeholder=" " required>
+            <label for="subject" class="form-label">Subject</label>
+          </div>
+          
+          <div class="form-group">
+            <textarea class="form-input form-textarea" id="message" placeholder=" " required></textarea>
+            <label for="message" class="form-label">Your Message</label>
+          </div>
+          
+          <button type="submit" class="form-submit">Send Message</button>
+        </form>
+      </div>
+      
+      <div class="contact-form-visual">
+        <div class="visual-content">
+          <i class="fas fa-paper-plane" style="font-size: 6rem; color: white; opacity: 0.7;"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="contact-cards-section">
+    <div class="contact-cards-container">
+      <div class="contact-cards-header">
+        <h2 class="contact-cards-title">
+          Other Ways to <span class="gradient-text">Reach Us</span>
+        </h2>
+        <p class="contact-cards-subtitle">
+          Whether you have questions about our products, services, or just want to say hello, 
+          we're here to help in any way we can.
+        </p>
+      </div>
+      
+      <div class="contact-cards-grid">
+        <div class="contact-card">
+          <div class="contact-card-icon">
+            <i class="fas fa-phone-alt"></i>
+          </div>
+          <h3 class="contact-card-title">Call Us</h3>
+          <p class="contact-card-info">
+            Speak directly with our team during business hours for immediate assistance.
+          </p>
+          <a href="tel:+18005551234" class="contact-card-link">+91 9899640024</a>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-card-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3 class="contact-card-title">Email Us</h3>
+          <p class="contact-card-info">
+            Send us an email and we'll get back to you within 24 hours on business days.
+          </p>
+          <a href="mailto:info@redsquareinfosys.com" class="contact-card-link">support@redsquareinfo.in</a>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-card-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3 class="contact-card-title">Live Chat</h3>
+          <p class="contact-card-info">
+            Chat with our support team in real-time for quick answers to your questions.
+          </p>
+          <a href="#" class="contact-card-link" id="startChat">Start Chat</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="map-section">
+    <div class="map-container">
+      <div class="map-overlay"></div>
+      <div class="map-content">
+        <h2 class="map-title">Visit Our Headquarters</h2>
+        <p class="map-address">
+          Shiv Arcade, A-2, Acharya Niketan, Mayur Vihar, Phase – I, New Delhi -110091<br>
+        </p>
+        <a href="https://www.google.com/maps/place/C4%2F19A,+Block+D,+Shashi+Garden,+Mayur+Vihar,+New+Delhi,+Delhi,+110091/@28.6089447,77.2902381,17z/data=!3m1!4b1!4m6!3m5!1s0x390ce4a2185d5bbb:0x6fdcd244f84989ac!8m2!3d28.60894!4d77.292813!16s%2Fg%2F11vyx8_nfz?entry=ttu&g_ep=EgoyMDI1MDczMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-button">Get Directions</a>
+      </div>
+    </div>
+  </section>
+  
+  <section class="faq-section">
+    <div class="faq-container">
+      <div class="faq-header">
+        <h2 class="faq-title">
+          Frequently Asked <span class="gradient-text">Questions</span>
+        </h2>
+        <p class="faq-subtitle">
+          Can't find what you're looking for? Check out some of our most common inquiries below.
+        </p>
+      </div>
+      
+      <div class="faq-accordion">
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What industries do you specialize in?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              We serve a diverse range of industries including finance, healthcare, manufacturing, 
+              retail, and technology. Our solutions are adaptable to meet the unique needs of 
+              businesses across various sectors.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How quickly can you respond to support requests?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Our standard response time is within 24 hours for general inquiries. For critical 
+              support issues, we offer 24/7 emergency support with a guaranteed response time 
+              of 2 hours for our premium clients.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Do you offer custom development services?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Absolutely! Our team specializes in custom software development tailored to your 
+              specific business needs. We follow an agile development process to ensure the 
+              solution perfectly matches your requirements.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What is your typical project timeline?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Project timelines vary based on complexity, but most implementations range from 
+              4-12 weeks. We provide detailed project plans during our discovery phase so 
+              you'll know exactly what to expect.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How do you ensure data security?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Security is our top priority. We implement enterprise-grade encryption, regular 
+              security audits, and compliance with industry standards like ISO 27001 and GDPR. 
+              Our team includes certified security specialists who continuously monitor and 
+              improve our security posture.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // REGISTER GSAP PLUGINS
+    gsap.registerPlugin(ScrollTrigger);
+    
+    
+    // MAIN ANIMATIONS ORCHESTRATOR
+    function initMainAnimations() {
+      initSophisticatedCursor();
+      initFloatingNavigation();
+      initHeroAnimations();
+      initFormAnimations();
+      initContactCardAnimations();
+      initFaqAnimations();
+    }
+    
+    // SOPHISTICATED CURSOR SYSTEM
+    function initSophisticatedCursor() {
+      const cursor = document.querySelector('.advanced-cursor');
+      let mouseX = 0, mouseY = 0;
+      let cursorX = 0, cursorY = 0;
+      
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+      
+      function updateCursor() {
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+        cursor.style.left = cursorX - 5 + 'px';
+        cursor.style.top = cursorY - 5 + 'px';
+        requestAnimationFrame(updateCursor);
+      }
+      
+      updateCursor();
+      
+      // Enhanced cursor interactions
+      document.querySelectorAll('a, button, .contact-card, .form-input, .faq-question').forEach(element => {
+        element.addEventListener('mouseenter', () => {
+          cursor.style.transform = 'scale(2)';
+          cursor.style.opacity = '0.6';
+        });
+        element.addEventListener('mouseleave', () => {
+          cursor.style.transform = 'scale(1)';
+          cursor.style.opacity = '1';
+        });
+      });
+      
+      cursor.style.opacity = '1';
+    }
+    
+    // FLOATING NAVIGATION SYSTEM
+    function initFloatingNavigation() {
+      const productsNav = document.querySelector('.products-nav');
+      const floatingNav = document.getElementById('floatingNav');
+      const navItems = document.querySelectorAll('.nav-item');
+
+      // Products dropdown toggle
+      productsNav.addEventListener('mouseenter', () => {
+        floatingNav.classList.add('expanded');
+      });
+
+      floatingNav.addEventListener('mouseleave', () => {
+        floatingNav.classList.remove('expanded');
+      });
+
+      // Smooth scrolling for nav items
+      navItems.forEach(item => {
+        if (item.getAttribute('href')) {
+          item.addEventListener('click', (e) => {
+            const href = item.getAttribute('href');
+            if (href.startsWith('#')) {
+              e.preventDefault();
+              const targetSection = document.querySelector(href);
+              if (targetSection) {
+                targetSection.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
+            }
+            // Let default behavior handle links to other pages
+          });
+        }
+      });
+
+      // Section highlighting on scroll
+      function updateActiveSection() {
+        navItems.forEach(nav => nav.classList.remove('active'));
+        const activeNav = document.querySelector('.nav-item[data-section="contact"]');
+        if (activeNav) {
+          activeNav.classList.add('active');
+        }
+      }
+
+      // Listen for scroll events
+      window.addEventListener('scroll', updateActiveSection);
+      
+      // Initial call
+      updateActiveSection();
+    }
+    
+    // HERO SECTION ANIMATIONS
+    function initHeroAnimations() {
+      const heroTl = gsap.timeline({ delay: 0.2 });
+      
+      heroTl.to('.contact-hero-brand', {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power3.out"
+      })
+      .to('.contact-hero-title', {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power3.out"
+      }, "-=0.2")
+      .to('.contact-hero-title .gradient-text', {
+        opacity: 1,
+        x: 0,
+        duration: 0.4,
+        ease: "back.out(1.7)"
+      }, "-=0.3")
+      .to('.contact-hero-subtitle', {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out"
+      }, "-=0.2");
+    }
+    
+    // FORM SECTION ANIMATIONS
+    function initFormAnimations() {
+      gsap.to('.contact-form-content', {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '.contact-form-section',
+          start: "top 70%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      gsap.to('.contact-form-visual', {
+        scale: 1,
+        rotation: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: '.contact-form-section',
+          start: "top 70%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      // Form validation
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          // Simple validation
+          const name = document.getElementById('name').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const message = document.getElementById('message').value.trim();
+          
+          if (name && email && message) {
+            // Show success animation
+            gsap.to('.contact-form-visual i', {
+              y: -20,
+              duration: 0.3,
+              ease: "power2.out",
+              onComplete: () => {
+                gsap.to('.contact-form-visual i', {
+                  y: 0,
+                  duration: 0.5,
+                  ease: "bounce.out"
+                });
+              }
+            });
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Show success message (you could replace this with an actual form submission)
+            alert('Thank you for your message! We will get back to you soon.');
+          }
+        });
+      }
+    }
+    
+    // CONTACT CARD ANIMATIONS
+    function initContactCardAnimations() {
+      gsap.to('.contact-cards-header', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '.contact-cards-header',
+          start: "top 85%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      gsap.utils.toArray('.contact-card').forEach((card, index) => {
+        gsap.to(card, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: index * 0.15,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+      
+      // Live chat simulation
+      const startChat = document.getElementById('startChat');
+      if (startChat) {
+        startChat.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert('Our live chat is currently offline. Please email us or call for immediate assistance.');
+        });
+      }
+    }
+    
+    // FAQ ANIMATIONS
+    function initFaqAnimations() {
+      gsap.to('.faq-header', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '.faq-header',
+          start: "top 85%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      gsap.utils.toArray('.faq-item').forEach((item, index) => {
+        gsap.to(item, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: index * 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+      
+      // FAQ accordion functionality
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+          
+          // Close all items
+          faqItems.forEach(faqItem => {
+            faqItem.classList.remove('active');
+          });
+          
+          // Open clicked item if it wasn't active
+          if (!isActive) {
+            item.classList.add('active');
+          }
+        });
+      });
+    }
+    
+    // INITIALIZE MAIN ANIMATIONS
+    document.addEventListener('DOMContentLoaded', () => {
+      initMainAnimations();
+    });
+    
+    // PERFORMANCE OPTIMIZATION
+    window.addEventListener('load', () => {
+      // Preload critical images
+      const imageUrls = [
+        'https://maps.googleapis.com/maps/api/staticmap?center=37.7749,-122.4194&zoom=13&size=800x400&key=YOUR_API_KEY'
+      ];
+      
+      imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+      });
+    });
+  </script>
+</body>
+</html>

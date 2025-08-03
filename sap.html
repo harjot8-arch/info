@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SAP Solutions - Red Square Infosys | Digital Innovation Architects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Open+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    :root {
+      --primary: #D2691E; /* Subtle Burnt Orange */
+      --secondary: #E59866; /* Lighter Burnt Orange */
+      --background: #FFFFFF; /* White */
+      --text-dark: #333333;
+      --text-light: #666666;
+      --text-lighter: #999999;
+      --accent: #C04040; /* Soft Crimson Red */
+      --paper: #FDF5E6; /* Warm Beige */
+      --shadow-light: rgba(210, 105, 30, 0.08);
+      --shadow-medium: rgba(210, 105, 30, 0.15);
+      --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--background);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+    
+    /* SOPHISTICATED CURSOR */
+    .advanced-cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transition: transform 0.2s ease, opacity 0.3s ease;
+      box-shadow: 0 0 15px rgba(210, 105, 30, 0.6);
+    }
+    
+    /* ARTISTIC NAVIGATION */
+    .floating-navbar {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9998;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 165, 0, 0.12);
+      border-radius: 40px;
+      padding: 0.4rem 0.7rem;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+      display: flex;
+      gap: 0.15rem;
+      opacity: 0;
+      animation: navbarSlideUp 0.8s ease-out 0.5s forwards;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      max-height: 50px;
+      overflow: hidden;
+      width: 410px;
+    }
+
+    @keyframes navbarSlideUp {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(80px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+    
+    .floating-navbar.expanded {
+      max-height: 450px;
+      transform: translateX(-50%) translateY(-3px);
+      box-shadow: 0 8px 30px rgba(255, 165, 0, 0.15);
+      flex-direction: column-reverse;
+      padding: 1.2rem;
+      border-radius: 18px;
+      width: 380px;
+      align-items: center;
+    }
+    
+    .nav-items-container {
+      display: flex;
+      gap: 0.3rem;
+    }
+    
+    .nav-item {
+      position: relative;
+      padding: 0.4rem 0.9rem;
+      background: transparent;
+      border: none;
+      border-radius: 20px;
+      color: var(--text-light);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      letter-spacing: 0.3px;
+    }
+    
+    .nav-item:hover {
+      color: var(--primary);
+      background: rgba(255, 165, 0, 0.08);
+    }
+    
+    .nav-item.active {
+      color: white;
+      background: var(--accent);
+      box-shadow: 0 3px 10px rgba(255, 126, 126, 0.25);
+    }
+    
+    /* PRODUCTS DROPDOWN */
+    .products-dropdown {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      width: 340px;
+      margin-bottom: 0.8rem;
+    }
+    
+    .floating-navbar.expanded .products-dropdown {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .dropdown-header {
+      text-align: center;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(255, 165, 0, 0.1);
+    }
+    
+    .dropdown-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 0.3rem;
+    }
+    
+    .dropdown-subtitle {
+      font-size: 0.65rem;
+      color: var(--text-light);
+      letter-spacing: 0.2px;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .product-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.6rem;
+      background: rgba(255, 165, 0, 0.03);
+      border: 1px solid rgba(255, 165, 0, 0.08);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .product-item:hover {
+      background: rgba(255, 165, 0, 0.08);
+      border-color: rgba(255, 165, 0, 0.15);
+      transform: translateY(-1px);
+    }
+    
+    .product-item.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    .product-item.active .product-name-small,
+    .product-item.active .product-desc-small {
+      color: white;
+    }
+    
+    .product-icon-small {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    
+    .product-name-small {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 0.1rem;
+      line-height: 1.2;
+    }
+    
+    .product-desc-small {
+      font-size: 0.55rem;
+      color: var(--text-light);
+      line-height: 1.3;
+    }
+    
+    .view-all-products {
+      display: inline-block;
+      padding: 0.5rem 1.2rem;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 18px;
+      font-size: 0.65rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    /* ELEGANT HERO SECTION */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1.5rem;
+      background-color: var(--accent);
+      background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 2rem 2rem;
+      overflow: hidden;
+    }
+    
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .brand {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: #FFFFFF;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      letter-spacing: -0.02em;
+      transform: translateY(15px);
+    }
+    
+    .hero-title .gradient-text {
+      background: var(--secondary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      font-weight: 300;
+      color: #FFFFFF;
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+      opacity: 0;
+      line-height: 1.7;
+      transform: translateY(12px);
+    }
+    
+    /* SAP INTRO SECTION */
+    .sap-intro-section {
+      position: relative;
+      padding: 8rem 1.5rem;
+      background: var(--background);
+      overflow: hidden;
+    }
+    
+    .sap-intro-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    
+    .sap-intro-visual {
+      position: relative;
+      height: 450px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      opacity: 0.8;
+      transform: scale(0.9) rotate(-2deg);
+      transition: all 0.4s ease;
+      box-shadow: 0 20px 60px rgba(210, 105, 30, 0.3);
+      overflow: hidden;
+    }
+    
+    .sap-intro-visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+      border-radius: 20px;
+    }
+    
+    .sap-intro-visual:hover {
+      transform: scale(0.95) rotate(0deg);
+      opacity: 1;
+      box-shadow: 0 25px 80px rgba(210, 105, 30, 0.4);
+    }
+    
+    .sap-intro-content {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    
+    .sap-intro-tagline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--primary);
+      letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      position: relative;
+    }
+    
+    .sap-intro-tagline::before {
+      content: '';
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .sap-intro-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 2rem;
+    }
+    
+    .sap-intro-title .gradient-text {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .sap-intro-text {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    
+    .sap-intro-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    .sap-intro-stat {
+      padding: 2rem;
+      background: var(--paper);
+      border: 1px solid var(--shadow-light);
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .sap-intro-stat::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      opacity: 0.05;
+      transition: left 0.4s ease;
+    }
+    
+    .sap-intro-stat:hover::before {
+      left: 0;
+    }
+    
+    .sap-intro-stat:hover {
+      transform: translateY(-5px);
+      border-color: var(--shadow-medium);
+      box-shadow: 0 10px 30px var(--shadow-light);
+    }
+    
+    .sap-intro-stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .sap-intro-stat-label {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      font-weight: 500;
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* SAP SOLUTIONS SECTION */
+    .sap-solutions-section {
+      position: relative;
+      padding: 8rem 1.5rem;
+      background: var(--paper);
+    }
+    
+    .sap-solutions-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .sap-solutions-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    
+    .sap-solutions-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+    
+    .sap-solutions-subtitle {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    
+    .sap-solutions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+    }
+    
+    .sap-solution-card {
+      background: white;
+      border: 1px solid var(--shadow-light);
+      border-radius: 20px;
+      padding: 3rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      opacity: 0;
+      transform: translateY(40px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .sap-solution-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--shadow-light), transparent);
+      transition: left 0.4s ease;
+    }
+    
+    .sap-solution-card:hover::before {
+      left: 0;
+    }
+    
+    .sap-solution-card:hover {
+      transform: translateY(-10px) !important;
+      border-color: var(--shadow-medium);
+      box-shadow: 0 20px 60px rgba(210, 105, 30, 0.15);
+    }
+    
+    .sap-solution-icon {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      position: relative;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+    
+    .sap-solution-card:hover .sap-solution-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+    
+    .sap-solution-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 1.2rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .sap-solution-description {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* SAP IMPLEMENTATION SECTION */
+    .sap-implementation-section {
+      position: relative;
+      padding: 8rem 1.5rem;
+      background: var(--background);
+    }
+    
+    .sap-implementation-container {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .sap-implementation-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    
+    .sap-implementation-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+    
+    .sap-implementation-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    
+    .sap-implementation-timeline {
+      position: relative;
+      padding: 3rem 0;
+    }
+    
+    .implementation-line {
+      position: absolute;
+      left: 30px;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--primary), var(--secondary));
+      opacity: 0.3;
+      border-radius: 2px;
+    }
+    
+    .implementation-step {
+      position: relative;
+      padding-left: 80px;
+      margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .implementation-dot {
+      position: absolute;
+      left: 20px;
+      top: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 4px solid var(--background);
+      box-shadow: 0 0 0 3px var(--shadow-light);
+      transition: all 0.3s ease;
+    }
+    
+    .implementation-step:hover .implementation-dot {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 6px var(--shadow-medium);
+    }
+    
+    .step-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+    
+    .step-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+    
+    .step-description {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 12px;
+      border: 1px solid var(--shadow-light);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    
+    /* SAP CTA SECTION */
+    .sap-cta-section {
+      position: relative;
+      padding: 8rem 1.5rem;
+      background: var(--accent);
+      text-align: center;
+      overflow: hidden;
+    }
+    
+    .sap-cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 60px 60px, 100px 100px;
+      animation: ctaPattern 25s linear infinite;
+    }
+    
+    @keyframes ctaPattern {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(60px) translateY(60px); }
+    }
+    
+    .sap-cta-container {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .sap-cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: white;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(30px);
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    .sap-cta-title .gradient-text {
+      background: var(--secondary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .sap-cta-text {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .sap-cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .sap-cta-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: white;
+      color: var(--primary);
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .sap-cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .sap-cta-button:hover::before {
+      left: 100%;
+    }
+    
+    .sap-cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+    }
+    
+    .sap-cta-button.secondary {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      color: white;
+    }
+    
+    /* RESPONSIVE DESIGN ENHANCEMENTS */
+    @media (max-width: 1024px) {
+      .sap-intro-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+      
+      .sap-intro-visual {
+        height: 350px;
+        order: -1;
+      }
+      
+      .sap-solutions-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .floating-navbar {
+        bottom: 1rem;
+        padding: 0.4rem 0.8rem;
+        left: 1rem;
+        right: 1rem;
+        width: auto;
+        transform: none;
+      }
+      
+      .floating-navbar.expanded {
+        width: auto;
+        left: 1rem;
+        right: 1rem;
+      }
+      
+      .nav-item {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+      }
+      
+      .hero {
+        min-height: 55vh;
+        padding: 6rem 1rem 4rem;
+      }
+      
+      .sap-intro-stats {
+        grid-template-columns: 1fr;
+      }
+      
+      .sap-cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .implementation-step {
+        padding-left: 60px;
+      }
+      
+      .implementation-line {
+        left: 20px;
+      }
+      
+      .implementation-dot {
+        left: 12px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .sap-solutions-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .sap-intro-visual {
+        height: 280px;
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- SOPHISTICATED CURSOR -->
+  <div class="advanced-cursor"></div>
+  
+  <!-- ARTISTIC NAVIGATION -->
+  <nav class="floating-navbar" id="floatingNav">
+    <div class="nav-items-container">
+      <a href="index.html" class="nav-item" data-section="home">
+        <span>Home</span>
+      </a>
+      <a href="about.html" class="nav-item" data-section="about">
+        <span>About</span>
+      </a>
+      <div class="nav-item products-nav" data-section="products">
+        <span>Products</span>
+      </div>
+      <a href="index.html#process" class="nav-item" data-section="process">
+        <span>Process</span>
+      </a>
+      <a href="contact.html" class="nav-item" data-section="contact">
+        <span>Contact</span>
+      </a>
+    </div>
+    
+    <!-- PRODUCTS DROPDOWN -->
+    <div class="products-dropdown">
+      <div class="dropdown-header">
+        <h3 class="dropdown-title">Our Product Suite</h3>
+        <p class="dropdown-subtitle">Cutting-edge solutions for modern businesses</p>
+      </div>
+      <div class="products-grid">
+        <a href="tally.html" class="product-item" data-product="tally">
+          <div class="product-icon-small">📊</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Tally Excellence</h4>
+            <p class="product-desc-small">Advanced accounting & analytics</p>
+          </div>
+        </a>
+        <a href="sap.html" class="product-item active" data-product="sap">
+          <div class="product-icon-small">🏢</div>
+          <div class="product-info">
+            <h4 class="product-name-small">SAP Integration</h4>
+            <p class="product-desc-small">Enterprise resource planning</p>
+          </div>
+        </a>
+        <a href="hr.html" class="product-item" data-product="hr">
+          <div class="product-icon-small">👥</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Greyt HR Suite</h4>
+            <p class="product-desc-small">Intelligent workforce management</p>
+          </div>
+        </a>
+        <a href="erp.html" class="product-item" data-product="erp">
+          <div class="product-icon-small">⚡</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Logic ERP Pro</h4>
+            <p class="product-desc-small">ML-powered business intelligence</p>
+          </div>
+        </a>
+        <a href="cloud-solutions.html" class="product-item" data-product="cloud">
+          <div class="product-icon-small">☁️</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Cloud Ecosystem</h4>
+            <p class="product-desc-small">Multi-cloud infrastructure</p>
+          </div>
+        </a>
+        <a href="cyber.html" class="product-item" data-product="security">
+          <div class="product-icon-small">🛡️</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Cyber Defense</h4>
+            <p class="product-desc-small">AI-driven threat protection</p>
+          </div>
+        </a>
+        <a href="IT.html" class="product-item" data-product="it">
+          <div class="product-icon-small">🔧</div>
+          <div class="product-info">
+            <h4 class="product-name-small">IT Infrastructure</h4>
+            <p class="product-desc-small">Robust and scalable IT solutions</p>
+          </div>
+        </a>
+        <a href="web.html" class="product-item" data-product="web">
+          <div class="product-icon-small">📱</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Mobile/Web App Development</h4>
+            <p class="product-desc-small">Custom applications for all platforms</p>
+          </div>
+        </a>
+      </div>
+      <div class="dropdown-footer">
+        <a href="index.html#products" class="view-all-products">View All Products</a>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- ELEGANT HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="brand">Red Square Infosys</div>
+      <h1 class="hero-title">
+        Transform with <span class="gradient-text">SAP Solutions</span>
+      </h1>
+      <p class="hero-subtitle">
+        Leverage the power of SAP to streamline operations, gain real-time insights, 
+        and drive digital transformation across your enterprise.
+      </p>
+    </div>
+  </section>
+  
+  <!-- SAP INTRO SECTION -->
+  <section class="sap-intro-section">
+    <div class="sap-intro-container">
+      <div class="sap-intro-content">
+        <div class="sap-intro-tagline">SAP Expertise</div>
+        <h2 class="sap-intro-title">
+          Enterprise <span class="gradient-text">Transformation</span>
+        </h2>
+        <p class="sap-intro-text">
+          At Red Square Infosys, we specialize in implementing SAP solutions that 
+          revolutionize how enterprises operate. Our certified SAP consultants bring 
+          deep industry knowledge and technical expertise to deliver tailored solutions 
+          that drive efficiency and growth.
+        </p>
+        <p class="sap-intro-text">
+          From S/4HANA migrations to customized module implementations, we help 
+          businesses of all sizes harness the full potential of SAP's powerful ecosystem.
+        </p>
+        
+        <div class="sap-intro-stats">
+          <div class="sap-intro-stat">
+            <div class="sap-intro-stat-number">50+</div>
+            <div class="sap-intro-stat-label">SAP Projects Completed</div>
+          </div>
+          <div class="sap-intro-stat">
+            <div class="sap-intro-stat-number">100%</div>
+            <div class="sap-intro-stat-label">Client Satisfaction Rate</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="sap-intro-visual">
+        <i class="fas fa-sync-alt" style="color: white; font-size: 6rem;"></i>
+      </div>
+    </div>
+  </section>
+  
+  <!-- SAP SOLUTIONS SECTION -->
+  <section class="sap-solutions-section">
+    <div class="sap-solutions-container">
+      <div class="sap-solutions-header">
+        <h2 class="sap-solutions-title">
+          Our SAP <span class="gradient-text">Solutions</span>
+        </h2>
+        <p class="sap-solutions-subtitle">
+          Comprehensive SAP services tailored to your business needs and industry requirements
+        </p>
+      </div>
+      
+      <div class="sap-solutions-grid">
+        <div class="sap-solution-card">
+          <div class="sap-solution-icon">🚀</div>
+          <h3 class="sap-solution-title">SAP S/4HANA Implementation</h3>
+          <p class="sap-solution-description">
+            Accelerate your digital transformation with our end-to-end S/4HANA implementation 
+            services. We guide you through the entire process from planning to go-live, 
+            ensuring minimal disruption to your operations.
+          </p>
+        </div>
+        
+        <div class="sap-solution-card">
+          <div class="sap-solution-icon">🔄</div>
+          <h3 class="sap-solution-title">SAP Migration Services</h3>
+          <p class="sap-solution-description">
+            Seamlessly migrate from legacy SAP systems or other ERP platforms to the latest 
+            SAP solutions. Our proven methodology ensures data integrity and business continuity.
+          </p>
+        </div>
+        
+        <div class="sap-solution-card">
+          <div class="sap-solution-icon">📊</div>
+          <h3 class="sap-solution-title">SAP Analytics Cloud</h3>
+          <p class="sap-solution-description">
+            Unlock the power of your data with SAP Analytics Cloud. We help you implement 
+            advanced analytics, planning, and predictive capabilities across your organization.
+          </p>
+        </div>
+        
+        <div class="sap-solution-card">
+          <div class="sap-solution-icon">🏭</div>
+          <h3 class="sap-solution-title">SAP Manufacturing Solutions</h3>
+          <p class="sap-solution-description">
+            Optimize your manufacturing operations with SAP's industry-specific solutions. 
+            From production planning to quality management, we've got you covered.
+          </p>
+        </div>
+        
+        <div class="sap-solution-card">
+          <div class="sap-solution-icon">🛒</div>
+          <h3 class="sap-solution-title">SAP Retail Solutions</h3>
+          <p class="sap-solution-description">
+            Transform your retail operations with SAP solutions designed for omnichannel 
+            commerce, merchandising, and customer engagement.
+          </p>
+        </div>
+        
+        <div class="sap-solution-card">
+          <div class="sap-solution-icon">☁️</div>
+          <h3 class="sap-solution-title">SAP on Cloud</h3>
+          <p class="sap-solution-description">
+            Leverage the flexibility and scalability of cloud with our SAP cloud migration 
+            and management services. We support all major cloud platforms including AWS, 
+            Azure, and Google Cloud.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- SAP IMPLEMENTATION SECTION -->
+  <section class="sap-implementation-section">
+    <div class="sap-implementation-container">
+      <div class="sap-implementation-header">
+        <h2 class="sap-implementation-title">
+          Our SAP Implementation <span class="gradient-text">Approach</span>
+        </h2>
+        <p class="sap-implementation-subtitle">
+          A proven methodology that ensures successful SAP deployments with measurable results
+        </p>
+      </div>
+      
+      <div class="sap-implementation-timeline">
+        <div class="implementation-line"></div>
+        
+        <div class="implementation-step">
+          <div class="implementation-dot"></div>
+          <div class="step-title">Phase 1</div>
+          <h3 class="step-heading">Discovery & Planning</h3>
+          <div class="step-description">
+            We begin with a comprehensive assessment of your business processes, 
+            requirements, and goals. Our team works closely with stakeholders to 
+            develop a detailed implementation roadmap aligned with your strategic 
+            objectives.
+          </div>
+        </div>
+        
+        <div class="implementation-step">
+          <div class="implementation-dot"></div>
+          <div class="step-title">Phase 2</div>
+          <h3 class="step-heading">System Design</h3>
+          <div class="step-description">
+            Our SAP architects design a solution that meets your specific business 
+            needs while following SAP best practices. We create detailed technical 
+            specifications and configure the system to match your operational workflows.
+          </div>
+        </div>
+        
+        <div class="implementation-step">
+          <div class="implementation-dot"></div>
+          <div class="step-title">Phase 3</div>
+          <h3 class="step-heading">Development & Testing</h3>
+          <div class="step-description">
+            Custom developments are implemented following agile methodologies. 
+            Rigorous testing ensures all components work seamlessly together before 
+            deployment. We conduct user acceptance testing to validate the solution 
+            against business requirements.
+          </div>
+        </div>
+        
+        <div class="implementation-step">
+          <div class="implementation-dot"></div>
+          <div class="step-title">Phase 4</div>
+          <h3 class="step-heading">Deployment & Go-Live</h3>
+          <div class="step-description">
+            Our team manages the entire deployment process with minimal disruption 
+            to your operations. We provide comprehensive go-live support to ensure 
+            a smooth transition to the new system.
+          </div>
+        </div>
+        
+        <div class="implementation-step">
+          <div class="implementation-dot"></div>
+          <div class="step-title">Phase 5</div>
+          <h3 class="step-heading">Optimization & Support</h3>
+          <div class="step-description">
+            Post-implementation, we provide ongoing support and optimization services 
+            to ensure your SAP solution continues to deliver maximum value. Our team 
+            helps you leverage new features and capabilities as your business evolves.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- SAP CTA SECTION -->
+  <section class="sap-cta-section">
+    <div class="sap-cta-container">
+      <h2 class="sap-cta-title">
+        Ready to <span class="gradient-text">Transform</span> Your Business with SAP?
+      </h2>
+      <p class="sap-cta-text">
+        Discover how Red Square Infosys can help you implement SAP solutions that drive 
+        operational excellence and digital transformation.
+      </p>
+      <div class="sap-cta-buttons">
+        <a href="contact.html" class="sap-cta-button">Get Started</a>
+        <a href="#sap-solutions" class="sap-cta-button secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // REGISTER GSAP PLUGINS
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // MAIN ANIMATIONS ORCHESTRATOR
+    function initMainAnimations() {
+      initSophisticatedCursor();
+      initFloatingNavigation();
+      initHeroAnimations();
+      initIntroAnimations();
+      initSolutionsAnimations();
+      initImplementationAnimations();
+      initCtaAnimations();
+    }
+    
+    // SOPHISTICATED CURSOR SYSTEM
+    function initSophisticatedCursor() {
+      const cursor = document.querySelector('.advanced-cursor');
+      let mouseX = 0, mouseY = 0;
+      let cursorX = 0, cursorY = 0;
+      
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+      
+      function updateCursor() {
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+        cursor.style.left = cursorX - 5 + 'px';
+        cursor.style.top = cursorY - 5 + 'px';
+        requestAnimationFrame(updateCursor);
+      }
+      
+      updateCursor();
+      
+      // Enhanced cursor interactions
+      document.querySelectorAll('a, button, .sap-solution-card, .implementation-step, .sap-intro-visual').forEach(element => {
+        element.addEventListener('mouseenter', () => {
+          cursor.style.transform = 'scale(2)';
+          cursor.style.opacity = '0.6';
+        });
+        element.addEventListener('mouseleave', () => {
+          cursor.style.transform = 'scale(1)';
+          cursor.style.opacity = '1';
+        });
+      });
+      
+      cursor.style.opacity = '1';
+    }
+    
+    // FLOATING NAVIGATION SYSTEM
+    function initFloatingNavigation() {
+      const productsNav = document.querySelector('.products-nav');
+      const floatingNav = document.getElementById('floatingNav');
+      const navItems = document.querySelectorAll('.nav-item');
+
+      // Products dropdown toggle
+      productsNav.addEventListener('mouseenter', () => {
+        floatingNav.classList.add('expanded');
+      });
+
+      floatingNav.addEventListener('mouseleave', () => {
+        floatingNav.classList.remove('expanded');
+      });
+
+      // Smooth scrolling for nav items
+      navItems.forEach(item => {
+        if (item.getAttribute('href')) {
+          item.addEventListener('click', (e) => {
+            const href = item.getAttribute('href');
+            if (href.startsWith('#')) {
+              e.preventDefault();
+              const targetSection = document.querySelector(href);
+              if (targetSection) {
+                targetSection.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
+            }
+            // Let default behavior handle links to other pages
+          });
+        }
+      });
+
+      // Section highlighting on scroll
+      function updateActiveSection() {
+        navItems.forEach(nav => nav.classList.remove('active'));
+        
+        const productsNavItem = document.querySelector('.nav-item[data-section="products"]');
+        if(productsNavItem) {
+            productsNavItem.classList.add('active');
+        }
+        
+        const activeNav = document.querySelector('.product-item[data-product="sap"]');
+        if (activeNav) {
+          activeNav.classList.add('active');
+        }
+      }
+
+      // Listen for scroll events
+      window.addEventListener('scroll', updateActiveSection);
+      
+      // Initial call
+      updateActiveSection();
+    }
+    
+    // HERO ANIMATIONS
+    function initHeroAnimations() {
+      const heroTl = gsap.timeline({ delay: 0.1 });
+      
+      heroTl.to('.brand', {
+        opacity: 1,
+        y: 0,
+        duration: 0.3,
+        ease: "power3.out"
+      })
+      .to('.hero-title', {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power3.out"
+      }, "-=0.15")
+      .to('.hero-title .gradient-text', {
+        opacity: 1,
+        x: 0,
+        duration: 0.3,
+        ease: "back.out(1.7)"
+      }, "-=0.2")
+      .to('.hero-subtitle', {
+        opacity: 1,
+        y: 0,
+        duration: 0.3,
+        ease: "power2.out"
+      }, "-=0.1");
+    }
+    
+    // INTRO SECTION ANIMATIONS
+    function initIntroAnimations() {
+      gsap.to('.sap-intro-content', {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '.sap-intro-section',
+          start: "top 70%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      gsap.to('.sap-intro-visual', {
+        scale: 1,
+        rotation: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: '.sap-intro-section',
+          start: "top 70%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      // Animate intro stats
+      gsap.utils.toArray('.sap-intro-stat').forEach((stat, index) => {
+        gsap.to(stat, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: index * 0.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: stat,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+    }
+    
+    // SOLUTIONS SECTION ANIMATIONS
+    function initSolutionsAnimations() {
+      gsap.to('.sap-solutions-header', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '.sap-solutions-header',
+          start: "top 85%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      gsap.utils.toArray('.sap-solution-card').forEach((card, index) => {
+        gsap.to(card, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: index * 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+    }
+    
+    // IMPLEMENTATION SECTION ANIMATIONS
+    function initImplementationAnimations() {
+      gsap.utils.toArray('.implementation-step').forEach((step, index) => {
+        gsap.to(step, {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          delay: index * 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: step,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+    }
+    
+    // CTA SECTION ANIMATIONS
+    function initCtaAnimations() {
+      const ctaTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.sap-cta-section',
+          start: "top 80%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      ctaTl.to('.sap-cta-title', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power3.out"
+      })
+      .to('.sap-cta-text', {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out"
+      }, "-=0.3")
+      .to('.sap-cta-buttons', {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out"
+      }, "-=0.2");
+    }
+    
+    // INITIALIZE MAIN ANIMATIONS
+    document.addEventListener('DOMContentLoaded', () => {
+      initMainAnimations();
+    });
+    
+    // PERFORMANCE OPTIMIZATION
+    window.addEventListener('load', () => {
+      // Preload critical images if any
+    });
+  </script>
+</body>
+</html>

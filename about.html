@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Red Square Infosys | Digital Innovation Architects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Open+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    :root {
+      --primary: #D2691E; /* Burnt Orange Elegance */
+      --secondary: #E59866; /* Lighter Burnt Orange */
+      --background: #FFFFFF; /* Pure White Canvas */
+      --text-dark: #333333; /* Deep Charcoal */
+      --text-light: #666666; /* Medium Gray */
+      --text-lighter: #999999; /* Light Gray */
+      --accent: #C04040; /* Crimson Red Accent */
+      --paper: #FDF5E6; /* Warm Beige Paper */
+      --shadow-light: rgba(210, 105, 30, 0.08);
+      --shadow-medium: rgba(210, 105, 30, 0.15);
+      --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+      --gradient-hero: linear-gradient(135deg, var(--accent), var(--accent));
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--background);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+    
+    
+    /* SOPHISTICATED CURSOR */
+    .advanced-cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transition: transform 0.2s ease, opacity 0.3s ease;
+      box-shadow: 0 0 15px rgba(210, 105, 30, 0.6);
+    }
+    
+    /* ARTISTIC NAVIGATION */
+    .floating-navbar {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9998;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 165, 0, 0.12);
+      border-radius: 40px;
+      padding: 0.4rem 0.7rem;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+      display: flex;
+      gap: 0.15rem;
+      opacity: 0;
+      animation: navbarSlideUp 0.8s ease-out 1.5s forwards;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      max-height: 50px;
+      overflow: hidden;
+      width: 410px;
+    }
+
+    @keyframes navbarSlideUp {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(80px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+    
+    .floating-navbar.expanded {
+      max-height: 450px;
+      transform: translateX(-50%) translateY(-3px);
+      box-shadow: 0 8px 30px rgba(255, 165, 0, 0.15);
+      flex-direction: column-reverse;
+      padding: 1.2rem;
+      border-radius: 18px;
+      width: 380px;
+      align-items: center;
+    }
+    
+    .nav-items-container {
+      display: flex;
+      gap: 0.3rem;
+    }
+    
+    .nav-item {
+      position: relative;
+      padding: 0.4rem 0.9rem;
+      background: transparent;
+      border: none;
+      border-radius: 20px;
+      color: var(--text-light);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      letter-spacing: 0.3px;
+    }
+    
+    .nav-item:hover {
+      color: var(--primary);
+      background: rgba(255, 165, 0, 0.08);
+    }
+    
+    .nav-item.active {
+      color: white;
+      background: var(--accent);
+      box-shadow: 0 3px 10px rgba(255, 126, 126, 0.25);
+    }
+    
+    /* PRODUCTS DROPDOWN */
+    .products-dropdown {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      width: 340px;
+      margin-bottom: 0.8rem;
+    }
+    
+    .floating-navbar.expanded .products-dropdown {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .dropdown-header {
+      text-align: center;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(255, 165, 0, 0.1);
+    }
+    
+    .dropdown-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 0.3rem;
+    }
+    
+    .dropdown-subtitle {
+      font-size: 0.65rem;
+      color: var(--text-light);
+      letter-spacing: 0.2px;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .product-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.6rem;
+      background: rgba(255, 165, 0, 0.03);
+      border: 1px solid rgba(255, 165, 0, 0.08);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .product-item:hover {
+      background: rgba(255, 165, 0, 0.08);
+      border-color: rgba(255, 165, 0, 0.15);
+      transform: translateY(-1px);
+    }
+    
+    .product-icon-small {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    
+    .product-name-small {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 0.1rem;
+      line-height: 1.2;
+    }
+    
+    .product-desc-small {
+      font-size: 0.55rem;
+      color: var(--text-light);
+      line-height: 1.3;
+    }
+    
+    .view-all-products {
+      display: inline-block;
+      padding: 0.5rem 1.2rem;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 18px;
+      font-size: 0.65rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    /* ABOUT HERO SECTION WITH PARALLAX */
+    .about-hero {
+      position: relative;
+      min-height: 65vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 1.5rem 6rem;
+      background: var(--gradient-hero);
+      overflow: hidden;
+    }
+    
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 50px 50px, 80px 80px;
+      animation: heroPattern 20s linear infinite;
+    }
+    
+    @keyframes heroPattern {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(50px) translateY(50px); }
+    }
+    
+    .about-hero-container {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .about-hero-brand {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      position: relative;
+    }
+    
+    .about-hero-brand::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    }
+    
+    .about-hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: #FFFFFF;
+      margin-bottom: 2rem;
+      opacity: 0;
+      letter-spacing: -0.02em;
+      transform: translateY(30px);
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    .about-hero-title .gradient-text {
+      background: linear-gradient(135deg, #FFD700, #FFA500, #FF6347);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    
+    .about-hero-subtitle {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-weight: 300;
+      color: rgba(255,255,255,0.9);
+      max-width: 700px;
+      margin: 0 auto 3rem auto;
+      opacity: 0;
+      line-height: 1.8;
+      transform: translateY(20px);
+    }
+    
+    /* ENHANCED MISSION SECTION */
+    .mission-section {
+      position: relative;
+      padding: 8rem 1.5rem;
+      background: var(--background);
+      overflow: hidden;
+    }
+    
+    .mission-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, var(--shadow-light) 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity: 0.3;
+      animation: missionPattern 30s linear infinite;
+    }
+    
+    @keyframes missionPattern {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .mission-container {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    
+    .mission-visual {
+      position: relative;
+      height: 450px;
+      background: var(--gradient-primary);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      opacity: 0.8;
+      transform: scale(0.9) rotate(-2deg);
+      transition: all 0.4s ease;
+      box-shadow: 0 20px 60px var(--shadow-medium);
+      overflow: hidden;
+    }
+    
+    .mission-visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+      border-radius: 20px;
+    }
+    
+    .mission-visual:hover {
+      transform: scale(0.95) rotate(0deg);
+      opacity: 1;
+      box-shadow: 0 25px 80px var(--shadow-medium);
+    }
+    
+    .mission-content {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    
+    .mission-tagline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--primary);
+      letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      position: relative;
+    }
+    
+    .mission-tagline::before {
+      content: '';
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .mission-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 2rem;
+    }
+    
+    .mission-title .gradient-text {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .mission-text {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    
+    .mission-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    .mission-stat {
+      padding: 2rem;
+      background: var(--paper);
+      border: 1px solid var(--shadow-light);
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .mission-stat::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      opacity: 0.05;
+      transition: left 0.4s ease;
+    }
+    
+    .mission-stat:hover::before {
+      left: 0;
+    }
+    
+    .mission-stat:hover {
+      transform: translateY(-5px);
+      border-color: var(--shadow-medium);
+      box-shadow: 0 10px 30px var(--shadow-light);
+    }
+    
+    .mission-stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .mission-stat-label {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      font-weight: 500;
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* STORY TIMELINE WITH ENHANCED VISUALS */
+    .story-section {
+      position: relative;
+      padding: 8rem 1.5rem;
+      background: var(--paper);
+    }
+    
+    .story-container {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .story-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    
+    .story-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+    
+    .story-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    
+    .story-timeline {
+      position: relative;
+      padding: 3rem 0;
+    }
+    
+    .timeline-line {
+      position: absolute;
+      left: 30px;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--primary), var(--secondary));
+      opacity: 0.3;
+      border-radius: 2px;
+    }
+    
+    .timeline-event {
+      position: relative;
+      padding-left: 80px;
+      margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .timeline-dot {
+      position: absolute;
+      left: 20px;
+      top: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 4px solid var(--paper);
+      box-shadow: 0 0 0 3px var(--shadow-light);
+      transition: all 0.3s ease;
+    }
+    
+    .timeline-event:hover .timeline-dot {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 6px var(--shadow-medium);
+    }
+    
+    .event-year {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+    
+    .event-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+    
+    .event-description {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 12px;
+      border: 1px solid var(--shadow-light);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    
+    /* VALUES SECTION WITH CARD ANIMATIONS */
+    .values-section {
+      position: relative;
+      padding: 8rem 1.5rem;
+      background: var(--background);
+    }
+    
+    .values-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .values-header {
+      text-align: center;
+      margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .values-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+    
+    .values-subtitle {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+    }
+    
+    .value-card {
+      background: white;
+      border: 1px solid var(--shadow-light);
+      border-radius: 20px;
+      padding: 3rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      opacity: 0;
+      transform: translateY(40px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .value-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--shadow-light), transparent);
+      transition: left 0.4s ease;
+    }
+    
+    .value-card:hover::before {
+      left: 0;
+    }
+    
+    .value-card:hover {
+      transform: translateY(-10px) !important;
+      border-color: var(--shadow-medium);
+      box-shadow: 0 20px 60px rgba(210, 105, 30, 0.15);
+    }
+    
+    .value-icon {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      position: relative;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+    
+    .value-card:hover .value-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+    
+    .value-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 1.2rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .value-description {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* TEAM SECTION WITH ENHANCED PROFILES */
+    .team-section {
+      position: relative;
+      padding: 8rem 1.5rem;
+      background: var(--paper);
+    }
+    
+    .team-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .team-header {
+      text-align: center;
+      margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .team-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+    
+    .team-subtitle {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    
+    .team-members {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3rem;
+    }
+    
+    .team-member {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px);
+      background: white;
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      border: 1px solid var(--shadow-light);
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+    
+    .team-member:hover {
+      transform: translateY(-10px) !important;
+      box-shadow: 0 20px 60px rgba(210, 105, 30, 0.15);
+    }
+    
+    .member-photo {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin: 0 auto 2rem;
+      background: var(--gradient-primary);
+      border: 4px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      box-shadow: 0 10px 30px var(--shadow-light);
+      position: relative;
+    }
+    
+    .member-photo::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255,255,255,0.2), transparent);
+      border-radius: 50%;
+    }
+    
+    .member-photo:hover {
+      transform: scale(1.05) rotate(3deg);
+      box-shadow: 0 15px 40px var(--shadow-medium);
+    }
+    
+    .member-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    
+    .member-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+    
+    .member-role {
+      font-size: 0.9rem;
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+    }
+    
+    .member-bio {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    
+    .member-social {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    
+    .member-social a {
+      width: 40px;
+      height: 40px;
+      background: var(--paper);
+      border: 1px solid var(--shadow-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--text-light);
+      transition: all 0.3s ease;
+    }
+    
+    .member-social a:hover {
+      color: white;
+      background: var(--gradient-primary);
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px var(--shadow-medium);
+    }
+    
+    /* CTA SECTION WITH DYNAMIC BACKGROUND */
+    .cta-section {
+      position: relative;
+      padding: 8rem 1.5rem;
+      background: var(--gradient-hero);
+      text-align: center;
+      overflow: hidden;
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 60px 60px, 100px 100px;
+      animation: ctaPattern 25s linear infinite;
+    }
+    
+    @keyframes ctaPattern {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(60px) translateY(60px); }
+    }
+    
+    .cta-container {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 500;
+      line-height: 1.1;
+      color: white;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(30px);
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    .cta-title .gradient-text {
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .cta-text {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .cta-button:hover::before {
+      left: 100%;
+    }
+    
+    .cta-button.secondary {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+    }
+    
+    /* RESPONSIVE DESIGN ENHANCEMENTS */
+    @media (max-width: 1024px) {
+      .mission-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+      
+      .mission-visual {
+        height: 350px;
+        order: -1;
+      }
+      
+      .values-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .floating-navbar {
+        bottom: 1rem;
+        padding: 0.4rem 0.8rem;
+        left: 1rem;
+        right: 1rem;
+        width: auto;
+        transform: none;
+      }
+      
+      .floating-navbar.expanded {
+        width: auto;
+        left: 1rem;
+        right: 1rem;
+      }
+      
+      .nav-item {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+      }
+      
+      .about-hero {
+        min-height: 55vh;
+        padding: 6rem 1rem 4rem;
+      }
+      
+      .mission-stats {
+        grid-template-columns: 1fr;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .timeline-event {
+        padding-left: 60px;
+      }
+      
+      .timeline-line {
+        left: 20px;
+      }
+      
+      .timeline-dot {
+        left: 12px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .team-members {
+        grid-template-columns: 1fr;
+      }
+      
+      .mission-visual {
+        height: 280px;
+        font-size: 3rem;
+      }
+      
+      .member-photo {
+        width: 150px;
+        height: 150px;
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  
+  <div class="advanced-cursor"></div>
+  
+  <nav class="floating-navbar" id="floatingNav">
+    <div class="nav-items-container">
+      <a href="index.html" class="nav-item" data-section="home">
+        <span>Home</span>
+      </a>
+      <a href="about.html" class="nav-item" data-section="about">
+        <span>About</span>
+      </a>
+      <div class="nav-item products-nav" data-section="products">
+        <span>Products</span>
+      </div>
+      <a href="index.html#process" class="nav-item" data-section="process">
+        <span>Process</span>
+      </a>
+      <a href="index.html#contact" class="nav-item" data-section="contact">
+        <span>Contact</span>
+      </a>
+    </div>
+    
+    <div class="products-dropdown">
+      <div class="dropdown-header">
+        <h3 class="dropdown-title">Our Product Suite</h3>
+        <p class="dropdown-subtitle">Cutting-edge solutions for modern businesses</p>
+      </div>
+      <div class="products-grid">
+        <a href="tally.html" class="product-item" data-product="tally">
+          <div class="product-icon-small">📊</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Tally Excellence</h4>
+            <p class="product-desc-small">Advanced accounting & analytics</p>
+          </div>
+        </a>
+        <a href="sap.html" class="product-item" data-product="sap">
+          <div class="product-icon-small">🏢</div>
+          <div class="product-info">
+            <h4 class="product-name-small">SAP Integration</h4>
+            <p class="product-desc-small">Enterprise resource planning</p>
+          </div>
+        </a>
+        <a href="hr.html" class="product-item" data-product="hr">
+          <div class="product-icon-small">👥</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Greyt HR Suite</h4>
+            <p class="product-desc-small">Intelligent workforce management</p>
+          </div>
+        </a>
+        <a href="erp.html" class="product-item" data-product="erp">
+          <div class="product-icon-small">⚡</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Logic ERP Pro</h4>
+            <p class="product-desc-small">ML-powered business intelligence</p>
+          </div>
+        </a>
+        <a href="cloud-solutions.html" class="product-item" data-product="cloud">
+          <div class="product-icon-small">☁️</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Cloud Ecosystem</h4>
+            <p class="product-desc-small">Multi-cloud infrastructure</p>
+          </div>
+        </a>
+        <a href="cyber.html" class="product-item" data-product="security">
+          <div class="product-icon-small">🛡️</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Cyber Defense</h4>
+            <p class="product-desc-small">AI-driven threat protection</p>
+          </div>
+        </a>
+        <a href="IT.html" class="product-item" data-product="it">
+          <div class="product-icon-small">🔧</div>
+          <div class="product-info">
+            <h4 class="product-name-small">IT Infrastructure</h4>
+            <p class="product-desc-small">Robust and scalable IT solutions</p>
+          </div>
+        </a>
+        <a href="web.html" class="product-item" data-product="web">
+          <div class="product-icon-small">📱</div>
+          <div class="product-info">
+            <h4 class="product-name-small">Mobile/Web App Development</h4>
+            <p class="product-desc-small">Custom applications for all platforms</p>
+          </div>
+        </a>
+      </div>
+      <div class="dropdown-footer">
+        <a href="index.html#products" class="view-all-products">View All Products</a>
+      </div>
+    </div>
+  </nav>
+  
+  <section class="about-hero">
+    <div class="about-hero-container">
+      <div class="about-hero-brand">Red Square Infosys</div>
+      <h1 class="about-hero-title">
+        Our Story of <span class="gradient-text">Innovation</span>
+      </h1>
+      <p class="about-hero-subtitle">
+        We are architects of digital transformation, crafting intelligent solutions 
+        that empower businesses to thrive in the modern technological landscape.
+      </p>
+    </div>
+  </section>
+  
+  <section class="mission-section">
+    <div class="mission-container">
+      <div class="mission-content">
+        <div class="mission-tagline">Our Mission</div>
+        <h2 class="mission-title">
+          Pioneering <span class="gradient-text">Digital Excellence</span>
+        </h2>
+        <p class="mission-text">
+          At Red Square Infosys, we don't just adapt to change—we create it. 
+          Our mission is to revolutionize how businesses operate through intelligent 
+          technology solutions that drive efficiency, innovation, and sustainable growth.
+        </p>
+        <p class="mission-text">
+          Founded in 2010 with a vision to bridge the technology gap, we've evolved 
+          from a small team of passionate innovators to a trusted global partner, 
+          delivering transformative results through our unique blend of technical 
+          expertise and creative problem-solving.
+        </p>
+        
+        <div class="mission-stats">
+          <div class="mission-stat">
+            <div class="mission-stat-number">13+</div>
+            <div class="mission-stat-label">Years of Excellence</div>
+          </div>
+          <div class="mission-stat">
+            <div class="mission-stat-number">500+</div>
+            <div class="mission-stat-label">Projects Delivered</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mission-visual">🚀</div>
+    </div>
+  </section>
+  
+  <section class="story-section">
+    <div class="story-container">
+      <div class="story-header">
+        <h2 class="story-title">A Journey of Innovation</h2>
+        <p class="story-subtitle">
+          From humble beginnings to industry leadership—our path of continuous evolution
+        </p>
+      </div>
+      
+      <div class="story-timeline">
+        <div class="timeline-line"></div>
+        
+        <div class="timeline-event">
+          <div class="timeline-dot"></div>
+          <div class="event-year">2010</div>
+          <h3 class="event-title">The Genesis</h3>
+          <div class="event-description">
+            Red Square Infosys was born from a vision to bridge the gap between 
+            technology and human-centric design. Starting with a small team of passionate 
+            innovators, we laid the foundation for what would become a transformative 
+            journey in enterprise technology.
+          </div>
+        </div>
+        
+        <div class="timeline-event">
+          <div class="timeline-dot"></div>
+          <div class="event-year">2012</div>
+          <h3 class="event-title">First Enterprise Breakthrough</h3>
+          <div class="event-description">
+            We delivered our first major enterprise solution, marking our entry into 
+            the world of large-scale digital transformation. This milestone validated 
+            our approach and opened doors to bigger opportunities in the corporate sector.
+          </div>
+        </div>
+        
+        <div class="timeline-event">
+          <div class="timeline-dot"></div>
+          <div class="event-year">2015</div>
+          <h3 class="event-title">Cloud Innovation Era</h3>
+          <div class="event-description">
+            Pioneering cloud solutions, we helped businesses migrate to scalable, 
+            agile infrastructures. Our cloud-first approach enabled organizations to 
+            unlock new levels of efficiency and operational flexibility.
+          </div>
+        </div>
+        
+        <div class="timeline-event">
+          <div class="timeline-dot"></div>
+          <div class="event-year">2018</div>
+          <h3 class="event-title">AI & Machine Learning Integration</h3>
+          <div class="event-description">
+            We integrated artificial intelligence and machine learning into our service 
+            portfolio, offering intelligent automation and predictive analytics that 
+            transformed how our clients make business decisions.
+          </div>
+        </div>
+        
+        <div class="timeline-event">
+          <div class="timeline-dot"></div>
+          <div class="event-year">2023</div>
+          <h3 class="event-title">Global Expansion & Industry Leadership</h3>
+          <div class="event-description">
+            With over 500 successful projects under our belt, we expanded our operations 
+            globally, serving a diverse range of industries and establishing ourselves 
+            as thought leaders in digital transformation.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="values-section">
+    <div class="values-container">
+      <div class="values-header">
+        <h2 class="values-title">
+          Our Core <span class="gradient-text">Values</span>
+        </h2>
+        <p class="values-subtitle">
+          These fundamental principles guide every decision we make and every solution we create
+        </p>
+      </div>
+      
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">💡</div>
+          <h3 class="value-title">Innovation First</h3>
+          <p class="value-description">
+            We challenge conventional thinking to develop groundbreaking solutions 
+            that push the boundaries of what's possible in enterprise technology. 
+            Innovation isn't just what we do—it's who we are.
+          </p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">🤝</div>
+          <h3 class="value-title">Client Partnership</h3>
+          <p class="value-description">
+            Your success is our success. We build long-term relationships based 
+            on trust, transparency, and shared vision for transformative growth. 
+            We're not just vendors—we're your strategic technology partners.
+          </p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">🔍</div>
+          <h3 class="value-title">Relentless Quality</h3>
+          <p class="value-description">
+            Excellence isn't an option—it's our standard. We obsess over every 
+            detail to deliver solutions that exceed expectations and stand the 
+            test of time in rapidly evolving digital landscapes.
+          </p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">🌱</div>
+          <h3 class="value-title">Sustainable Growth</h3>
+          <p class="value-description">
+            We design solutions that scale with your business, ensuring long-term 
+            value and adaptability. Our approach focuses on sustainable digital 
+            transformation that grows with your evolving needs.
+          </p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">🧠</div>
+          <h3 class="value-title">Collective Genius</h3>
+          <p class="value-description">
+            Our diverse team of experts collaborates to create solutions greater 
+            than the sum of their parts. Through shared knowledge, creativity, 
+            and collective problem-solving, we achieve extraordinary results.
+          </p>
+        </div>
+        
+        <div class="value-card">
+          <div class="value-icon">⚡</div>
+          <h3 class="value-title">Agile Execution</h3>
+          <p class="value-description">
+            We move with purpose and precision, adapting quickly to deliver 
+            measurable results without compromising quality. Our agile methodology 
+            ensures rapid deployment and continuous improvement.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="team-section">
+    <div class="team-container">
+      <div class="team-header">
+        <h2 class="team-title">
+          Meet Our <span class="gradient-text">Leadership</span>
+        </h2>
+        <p class="team-subtitle">
+          The visionary minds and experienced professionals driving our mission forward
+        </p>
+      </div>
+      
+      <div class="team-members">
+        <div class="team-member">
+          <div class="member-photo">
+            
+          </div>
+          <h3 class="member-name">Rajiv Sharma</h3>
+          <div class="member-role">Founder & CEO</div>
+          <p class="member-bio">
+            Visionary leader with 20+ years in enterprise technology and digital transformation. 
+            Rajiv founded Red Square Infosys with a mission to democratize enterprise-grade 
+            technology solutions for businesses of all sizes.
+          </p>
+          <div class="member-social">
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-photo">
+            
+          </div>
+          <h3 class="member-name">Priya Patel</h3>
+          <div class="member-role">Chief Technology Officer</div>
+          <p class="member-bio">
+            Technology architect specializing in AI-driven enterprise solutions and cloud 
+            infrastructure. Priya leads our technical innovation and ensures our solutions 
+            remain at the cutting edge of technology.
+          </p>
+          <div class="member-social">
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-photo">
+            
+          </div>
+          <h3 class="member-name">Amit Kumar</h3>
+          <div class="member-role">VP of Product Strategy</div>
+          <p class="member-bio">
+            Product strategist with deep expertise in ERP systems and business intelligence 
+            platforms. Amit ensures our products meet real-world business needs and deliver 
+            measurable value to our clients.
+          </p>
+          <div class="member-social">
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  
+  <section class="cta-section">
+    <div class="cta-container">
+      <h2 class="cta-title">
+        Ready to <span class="gradient-text">Transform</span> Your Business?
+      </h2>
+      <p class="cta-text">
+        Discover how Red Square Infosys can help you harness the power of digital 
+        transformation to achieve unprecedented business growth and operational excellence.
+      </p>
+      <div class="cta-buttons">
+        <a href="contact.html" class="cta-button">Start Your Journey</a>
+        <a href="index.html#products" class="cta-button secondary">Explore Solutions</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // REGISTER GSAP PLUGINS
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // MAIN ANIMATIONS ORCHESTRATOR
+    function initMainAnimations() {
+      initSophisticatedCursor();
+      initFloatingNavigation();
+      initHeroAnimations();
+      initMissionAnimations();
+      initStoryAnimations();
+      initValuesAnimations();
+      initTeamAnimations();
+      initCtaAnimations();
+    }
+    
+    // SOPHISTICATED CURSOR SYSTEM
+    function initSophisticatedCursor() {
+      const cursor = document.querySelector('.advanced-cursor');
+      let mouseX = 0, mouseY = 0;
+      let cursorX = 0, cursorY = 0;
+      
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+      
+      function updateCursor() {
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+        cursor.style.left = cursorX - 5 + 'px';
+        cursor.style.top = cursorY - 5 + 'px';
+        requestAnimationFrame(updateCursor);
+      }
+      
+      updateCursor();
+      
+      // Enhanced cursor interactions
+      document.querySelectorAll('a, button, .value-card, .member-photo, .mission-visual, .timeline-dot').forEach(element => {
+        element.addEventListener('mouseenter', () => {
+          cursor.style.transform = 'scale(2)';
+          cursor.style.opacity = '0.6';
+        });
+        element.addEventListener('mouseleave', () => {
+          cursor.style.transform = 'scale(1)';
+          cursor.style.opacity = '1';
+        });
+      });
+      
+      cursor.style.opacity = '1';
+    }
+    
+    // FLOATING NAVIGATION SYSTEM
+    function initFloatingNavigation() {
+      const productsNav = document.querySelector('.products-nav');
+      const floatingNav = document.getElementById('floatingNav');
+      const navItems = document.querySelectorAll('.nav-item');
+      const sections = document.querySelectorAll('section');
+
+      // Products dropdown toggle
+      productsNav.addEventListener('mouseenter', () => {
+        floatingNav.classList.add('expanded');
+      });
+
+      floatingNav.addEventListener('mouseleave', () => {
+        floatingNav.classList.remove('expanded');
+      });
+
+      // Smooth scrolling for nav items
+      navItems.forEach(item => {
+        if (item.getAttribute('href')) {
+          item.addEventListener('click', (e) => {
+            const href = item.getAttribute('href');
+            if (href.startsWith('#')) {
+              e.preventDefault();
+              const targetSection = document.querySelector(href);
+              if (targetSection) {
+                targetSection.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
+            }
+            // Let default behavior handle links to other pages
+          });
+        }
+      });
+
+      // Section highlighting on scroll
+      function updateActiveSection() {
+        // Since about.html doesn't have the same sections, we'll just highlight 'About'.
+        navItems.forEach(nav => nav.classList.remove('active'));
+        const activeNav = document.querySelector('.nav-item[data-section="about"]');
+        if (activeNav) {
+          activeNav.classList.add('active');
+        }
+      }
+
+      // Listen for scroll events
+      window.addEventListener('scroll', updateActiveSection);
+      
+      // Initial call
+      updateActiveSection();
+    }
+    
+    // HERO SECTION ANIMATIONS
+    function initHeroAnimations() {
+      const heroTl = gsap.timeline({ delay: 0.2 });
+      
+      heroTl.to('.about-hero-brand', {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power3.out"
+      })
+      .to('.about-hero-title', {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power3.out"
+      }, "-=0.2")
+      .to('.about-hero-title .gradient-text', {
+        opacity: 1,
+        x: 0,
+        duration: 0.4,
+        ease: "back.out(1.7)"
+      }, "-=0.3")
+      .to('.about-hero-subtitle', {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out"
+      }, "-=0.2");
+    }
+    
+    // MISSION SECTION ANIMATIONS
+    function initMissionAnimations() {
+      gsap.to('.mission-content', {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '.mission-section',
+          start: "top 70%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      gsap.to('.mission-visual', {
+        scale: 1,
+        rotation: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: '.mission-section',
+          start: "top 70%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      // Animate mission stats
+      gsap.utils.toArray('.mission-stat').forEach((stat, index) => {
+        gsap.to(stat, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: index * 0.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: stat,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+    }
+    
+    // STORY TIMELINE ANIMATIONS
+    function initStoryAnimations() {
+      gsap.utils.toArray('.timeline-event').forEach((event, index) => {
+        gsap.to(event, {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          delay: index * 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: event,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+    }
+    
+    // VALUES SECTION ANIMATIONS
+    function initValuesAnimations() {
+      gsap.to('.values-header', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '.values-header',
+          start: "top 85%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      gsap.utils.toArray('.value-card').forEach((card, index) => {
+        gsap.to(card, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: index * 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+    }
+    
+    // TEAM SECTION ANIMATIONS
+    function initTeamAnimations() {
+      gsap.to('.team-header', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: '.team-header',
+          start: "top 85%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      gsap.utils.toArray('.team-member').forEach((member, index) => {
+        gsap.to(member, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: index * 0.15,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: member,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+    }
+    
+    // CTA SECTION ANIMATIONS
+    function initCtaAnimations() {
+      const ctaTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.cta-section',
+          start: "top 80%",
+          toggleActions: "play none none none"
+        }
+      });
+      
+      ctaTl.to('.cta-title', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power3.out"
+      })
+      .to('.cta-text', {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out"
+      }, "-=0.3")
+      .to('.cta-buttons', {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out"
+      }, "-=0.2");
+    }
+    
+    // INITIALIZE ALL ANIMATIONS
+    document.addEventListener('DOMContentLoaded', () => {
+      initMainAnimations();
+    });
+    
+    // PERFORMANCE OPTIMIZATION
+    window.addEventListener('load', () => {
+      // Preload critical images
+      const imageUrls = [
+        'https://randomuser.me/api/portraits/men/32.jpg',
+        'https://randomuser.me/api/portraits/women/44.jpg',
+        'https://randomuser.me/api/portraits/men/67.jpg',
+        'https://randomuser.me/api/portraits/women/68.jpg'
+      ];
+      
+      imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+      });
+    });
+  </script>
+</body>
+</html>
